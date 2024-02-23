@@ -1,2 +1,1 @@
-npx expo install or npm install
-npx expo start
+npx expo install or npm install | npx expo start
