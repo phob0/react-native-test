@@ -11,28 +11,33 @@ import {
 import React, {useState} from 'react';
 import Button from './atom/Button';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import {CreateQuote} from '../../util/Helpers';
+import {CreateBook} from '../../util/Helpers';
 import {useDispatch, useSelector} from 'react-redux';
 import uuid from 'react-native-uuid';
-import DatePicker from 'react-native-date-picker'
+import moment from 'moment';
+import CalendarPicker from 'react-native-calendar-picker'
 import {MODAL} from '../../slice/crudSlice';
 
 const AppModal = ({handleCloseModal}) => {
   const showModal = useSelector(state => state.quotes.modalOpen);
   const loading = useSelector(state => state.quotes.loading);
   const [author, setAuthor] = useState();
-  const [text, setTitle] = useState();
+  const [title, setTitle] = useState();
 
-  const [date, setDate] = useState(new Date())
+
+  const [selectedStartDate, setSelectedStartDate] = useState(null);
+
+  const startDate = selectedStartDate ? moment(selectedStartDate).format('YYYY-MM-DD').toString() : '';
 
   const dispatch = useDispatch();
   handleAddQuote = () => {
     let data = {
       title,
       author,
+      date: moment(selectedStartDate).format('YYYY-MM-DD').toString()
     };
     if (title && author) {
-      CreateQuote(dispatch, data);
+      CreateBook(dispatch, data);
     }
   };
   return (
@@ -58,7 +63,7 @@ const AppModal = ({handleCloseModal}) => {
                 width: '100%',
               }}>
               <Text style={{color: 'black', fontSize: 20, marginBottom: 10}}>
-                Author
+                Autor
               </Text>
               <View
                 style={{
@@ -86,7 +91,7 @@ const AppModal = ({handleCloseModal}) => {
                 width: '100%',
               }}>
               <Text style={{color: 'black', fontSize: 20, marginBottom: 10}}>
-                Quote
+                Titlu
               </Text>
               <View
                 style={{
@@ -96,13 +101,7 @@ const AppModal = ({handleCloseModal}) => {
                 }}>
                 <TextInput
                   onChangeText={setTitle}
-                  multiline
-                  numberOfLines={10}
-                  style={{
-                    textAlignVertical: 'top',
-                    padding: 10,
-                    color: 'black',
-                  }}
+                  style={{padding: 5, height: 50, color: 'black'}}
                 />
               </View>
             </View>
@@ -119,7 +118,7 @@ const AppModal = ({handleCloseModal}) => {
                 width: '100%',
               }}>
               <Text style={{color: 'black', fontSize: 20, marginBottom: 10}}>
-                Data publicarii
+                Data publicarii: {startDate}
               </Text>
               <View
                 style={{
@@ -127,8 +126,7 @@ const AppModal = ({handleCloseModal}) => {
                   backgroundColor: '#f1f1f1',
                   borderRadius: 5,
                 }}>
-                  {/* <CalendarPicker onDateChange={setTitle} style={{padding: 5, height: 50, color: 'black'}} /> */}
-                  <DatePicker date={date} onDateChange={setDate} />
+                  <CalendarPicker onDateChange={setSelectedStartDate} />
               </View>
             </View>
           </View>

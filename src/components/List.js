@@ -1,14 +1,14 @@
 import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {DeletQuote} from '../../util/Helpers';
+import {DeleteBook} from '../../util/Helpers';
 import {PLACEHOLDER_DATA, UPDATE_MODAL} from '../../slice/crudSlice';
 
 export default function List({item}) {
   const placehoderData = useSelector(state => state.quotes.PlaceHolder);
   let dispatch = useDispatch();
   let onPressRemove = () => {
-    DeletQuote(dispatch, item?.id);
+    DeleteBook(dispatch, item?.id);
   };
   let onPressUpdate = () => {
     dispatch(PLACEHOLDER_DATA(item));

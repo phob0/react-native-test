@@ -16,7 +16,7 @@ import {
   
   import {MODAL, UPDATE_MODAL} from '../slice/crudSlice';
   import AppModal from './components/AppModal';
-  import UpdateQuoteModal from './components/UpdateQuoteModal';
+  import UpdateBookModal from './components/UpdateBookModal';
   
   const Home = () => {
     const data = useSelector(state => state.quotes.quotes);
@@ -41,7 +41,7 @@ import {
           keyExtractor={(_, i) => i.toString()}
         />
         <AppModal handleCloseModal={handleCloseModal} />
-        <UpdateQuoteModal handleCloseUpdateModal={handleCloseUpdateModal} />
+        <UpdateBookModal handleCloseUpdateModal={handleCloseUpdateModal} />
       </View>
     );
   };

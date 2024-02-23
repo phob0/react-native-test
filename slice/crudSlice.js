@@ -14,7 +14,7 @@ var dd = String(today.getDate()).padStart(2, '0');
 var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
 var yyyy = today.getFullYear();
 
-let date = mm + '/' + dd + '/' + yyyy;
+let date = yyyy + '-' + mm + '-' + dd;
 
 const initialState = {
   modalOpen: false,
@@ -48,8 +48,7 @@ const Quote = createReducer(initialState, builder => {
     let prev = JSON.parse(JSON.stringify(state.quotes));
     prev.unshift({
       ...action.payload,
-      id: uuid.v4(),
-      date: `${date}`,
+      id: uuid.v4()
     });
     return {
       ...state,

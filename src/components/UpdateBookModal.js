@@ -11,18 +11,18 @@ import {
 import React, {useEffect, useState} from 'react';
 import Button from './atom/Button';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import {CreateQuote, UpdateQuote} from '../../util/Helpers';
+import {CreateBook, UpdateBook} from '../../util/Helpers';
 import {useDispatch, useSelector} from 'react-redux';
 import {UPDATE_MODAL} from '../../slice/crudSlice';
 
-const UpdateQuoteModal = ({handleCloseUpdateModal}) => {
+const UpdateBookModal = ({handleCloseUpdateModal}) => {
   const showModal = useSelector(state => state.quotes.updateModalOpen);
   const loading = useSelector(state => state.quotes.loading);
   const placehoderData = useSelector(state => state.quotes.PlaceHolder);
   const [author, setAuthor] = useState();
   const [title, setTitle] = useState();
   const dispatch = useDispatch();
-  let handleUpdateQuote = () => {
+  let handleUpdateBook = () => {
     let data = {
       title,
       author,
@@ -30,7 +30,7 @@ const UpdateQuoteModal = ({handleCloseUpdateModal}) => {
     };
 
     if (title && author) {
-      UpdateQuote(dispatch, data);
+      UpdateBook(dispatch, data);
     }
   };
   return (
@@ -120,7 +120,7 @@ const UpdateQuoteModal = ({handleCloseUpdateModal}) => {
           </View>
           {!loading ? (
             <Button
-              onPress={handleUpdateQuote}
+              onPress={handleUpdateBook}
               text={'Save'}
               textStyle={styles.btnText}
               style={styles.btn}
@@ -138,7 +138,7 @@ const UpdateQuoteModal = ({handleCloseUpdateModal}) => {
   );
 };
 
-export default UpdateQuoteModal;
+export default UpdateBookModal;
 
 const styles = StyleSheet.create({
   btn: {
