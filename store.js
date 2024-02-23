@@ -1,8 +1,8 @@
 import {configureStore} from '@reduxjs/toolkit';
-import quotes from './slice/crudSlice';
+import books from './slice/crudSlice';
 
 let reducer = {
-  quotes,
+  books,
 };
 
 const store = configureStore({

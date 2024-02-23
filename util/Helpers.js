@@ -7,13 +7,6 @@ import {
   UPDATE_ONE,
 } from '../slice/crudSlice';
 
-var today = new Date();
-var dd = String(today.getDate()).padStart(2, '0');
-var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-var yyyy = today.getFullYear();
-
-let date = mm + '/' + dd + '/' + yyyy;
-
 const CreateBook = (dispatch, data) => {
   dispatch(LOADING(true));
   dispatch(CREATE_NEW(data));
@@ -23,7 +16,7 @@ const CreateBook = (dispatch, data) => {
   }, 1000);
 };
 const UpdateBook = (dispatch, data1) => {
-  const data = {...data1, date: date};
+  const data = {...data1};
   dispatch(LOADING(true));
   dispatch(UPDATE_ONE(data));
   setTimeout(() => {

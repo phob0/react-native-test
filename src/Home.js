@@ -19,7 +19,7 @@ import {
   import UpdateBookModal from './components/UpdateBookModal';
   
   const Home = () => {
-    const data = useSelector(state => state.quotes.quotes);
+    const data = useSelector(state => state.books.books);
     let dispatch = useDispatch();
     let _renderList = ({item, _}) => <List item={item} />;
   

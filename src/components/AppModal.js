@@ -19,18 +19,20 @@ import CalendarPicker from 'react-native-calendar-picker'
 import {MODAL} from '../../slice/crudSlice';
 
 const AppModal = ({handleCloseModal}) => {
-  const showModal = useSelector(state => state.quotes.modalOpen);
-  const loading = useSelector(state => state.quotes.loading);
-  const [author, setAuthor] = useState();
-  const [title, setTitle] = useState();
-
-
+  const showModal = useSelector(state => state.books.modalOpen);
+  const loading = useSelector(state => state.books.loading);
+  const [author, setAuthor] = useState(null);
+  const [title, setTitle] = useState(null);
   const [selectedStartDate, setSelectedStartDate] = useState(null);
 
   const startDate = selectedStartDate ? moment(selectedStartDate).format('YYYY-MM-DD').toString() : '';
 
+  const [titleError, setTitleError] = useState();
+  const [authorError, setAuthorError] = useState();
+
   const dispatch = useDispatch();
   handleAddQuote = () => {
+
     let data = {
       title,
       author,
@@ -38,6 +40,9 @@ const AppModal = ({handleCloseModal}) => {
     };
     if (title && author) {
       CreateBook(dispatch, data);
+    } else {
+      if (!author) {setAuthorError("Campul autor nu poate fi gol")} else {setAuthorError("")}
+      if (!title) {setTitleError("Campul titlu nu poate fi gol")} else {setTitleError("")}
     }
   };
   return (
@@ -75,6 +80,7 @@ const AppModal = ({handleCloseModal}) => {
                   onChangeText={setAuthor}
                   style={{padding: 5, height: 50, color: 'black'}}
                 />
+                <Text style={styles.error}>{authorError}</Text>
               </View>
             </View>
           </View>
@@ -103,6 +109,7 @@ const AppModal = ({handleCloseModal}) => {
                   onChangeText={setTitle}
                   style={{padding: 5, height: 50, color: 'black'}}
                 />
+                <Text style={styles.error}>{titleError}</Text>
               </View>
             </View>
           </View>
@@ -180,5 +187,8 @@ const styles = StyleSheet.create({
     marginTop: '30%',
     justifyContent: 'center',
     borderRadius: 10,
+  },
+  error: {
+    color: "red",
   },
 });

@@ -21,62 +21,63 @@ const initialState = {
   PlaceHolder: null,
   updateModalOpen: false,
   loading: false,
-  quotes: [
+  books: [
     {
       id: 1,
       author: 'Vivian Greene',
       date: `${date}`,
-      title: "Life isn't about waiting for the storm to pass. It's about learning how to dance in the rain.",
+      title: "The Book",
     },
     {
       id: 2,
       author: 'Maya Angelou',
       date: `${date}`,
-      title: 'Still, like air, I rise.',
+      title: 'Another book',
     },
     {
       id: 3,
       author: 'Confucius',
       date: `${date}`,
-      title: 'Our greatest glory is not in never falling, but in rising every time we fall.',
+      title: 'A great book',
     },
   ],
 };
 // Create new
-const Quote = createReducer(initialState, builder => {
+const Book = createReducer(initialState, builder => {
   builder.addCase(CREATE_NEW, (state, action) => {
-    let prev = JSON.parse(JSON.stringify(state.quotes));
+    let prev = JSON.parse(JSON.stringify(state.books));
     prev.unshift({
       ...action.payload,
       id: uuid.v4()
     });
     return {
       ...state,
-      quotes: prev,
+      books: prev,
     };
   });
 
   // Update one
 
   builder.addCase(UPDATE_ONE, (state, action) => {
-    let prev = JSON.parse(JSON.stringify(state.quotes));
+    let prev = JSON.parse(JSON.stringify(state.books));
+    console.log(prev)
     const index = prev.findIndex(obj => obj.id === action.payload.id);
     if (index !== -1) prev[index] = action?.payload;
     return {
       ...state,
-      quotes: prev,
+      books: prev,
     };
   });
 
   // Delete one
 
   builder.addCase(REMOVE_ONE, (state, action) => {
-    let prev = JSON.parse(JSON.stringify(state.quotes));
+    let prev = JSON.parse(JSON.stringify(state.books));
     const index = prev.findIndex(obj => obj.id === action?.payload);
     if (index !== -1) prev.splice(index, 1);
     return {
       ...state,
-      quotes: prev,
+      books: prev,
     };
   });
 
@@ -112,7 +113,7 @@ const Quote = createReducer(initialState, builder => {
   });
 });
 
-export default Quote;
+export default Book;
 
 export {
   CREATE_NEW,

@@ -14,23 +14,38 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {CreateBook, UpdateBook} from '../../util/Helpers';
 import {useDispatch, useSelector} from 'react-redux';
 import {UPDATE_MODAL} from '../../slice/crudSlice';
+import moment from 'moment';
+import CalendarPicker from 'react-native-calendar-picker'
 
 const UpdateBookModal = ({handleCloseUpdateModal}) => {
-  const showModal = useSelector(state => state.quotes.updateModalOpen);
-  const loading = useSelector(state => state.quotes.loading);
-  const placehoderData = useSelector(state => state.quotes.PlaceHolder);
+  const showModal = useSelector(state => state.books.updateModalOpen);
+  const loading = useSelector(state => state.books.loading);
+  const placehoderData = useSelector(state => state.books.PlaceHolder);
+
   const [author, setAuthor] = useState();
   const [title, setTitle] = useState();
+
+  const [selectedStartDate, setSelectedStartDate] = useState(null);
+
+  const startDate = selectedStartDate ? moment(selectedStartDate).format('YYYY-MM-DD').toString() : moment(placehoderData?.date).format('YYYY-MM-DD').toString();
+
+  const [titleError, setTitleError] = useState();
+  const [authorError, setAuthorError] = useState();
+
   const dispatch = useDispatch();
   let handleUpdateBook = () => {
     let data = {
       title,
       author,
+      date: startDate,
       id: placehoderData.id,
     };
 
     if (title && author) {
       UpdateBook(dispatch, data);
+    } else {
+      if (!author) {setAuthorError("Editati campul autor")} else {setAuthorError("")}
+      if (!title) {setTitleError("Editati campul titlu")} else {setTitleError("")}
     }
   };
   return (
@@ -80,6 +95,7 @@ const UpdateBookModal = ({handleCloseUpdateModal}) => {
                   onChangeText={setAuthor}
                   style={{padding: 5, height: 50, color: 'black'}}
                 />
+                <Text style={styles.error}>{authorError}</Text>
               </View>
             </View>
           </View>
@@ -96,7 +112,7 @@ const UpdateBookModal = ({handleCloseUpdateModal}) => {
                 width: '100%',
               }}>
               <Text style={{color: 'black', fontSize: 20, marginBottom: 10}}>
-                Quote
+                Titlu
               </Text>
               <View
                 style={{
@@ -106,15 +122,33 @@ const UpdateBookModal = ({handleCloseUpdateModal}) => {
                 }}>
                 <TextInput
                   onChangeText={setTitle}
-                  multiline
                   defaultValue={`${placehoderData?.title}`}
-                  numberOfLines={10}
-                  style={{
-                    textAlignVertical: 'top',
-                    padding: 10,
-                    color: 'black',
-                  }}
+                  style={{padding: 5, height: 50, color: 'black'}}
                 />
+                <Text style={styles.error}>{titleError}</Text>
+              </View>
+            </View>
+          </View>
+          <View
+            style={{
+              width: '90%',
+              alignSelf: 'center',
+              marginTop: '10%',
+            }}>
+            <View
+              style={{
+                width: '100%',
+              }}>
+              <Text style={{color: 'black', fontSize: 20, marginBottom: 10}}>
+                Data publicarii: {startDate}
+              </Text>
+              <View
+                style={{
+                  width: '100%',
+                  backgroundColor: '#f1f1f1',
+                  borderRadius: 5,
+                }}>
+                  <CalendarPicker initialDate={startDate} onDateChange={setSelectedStartDate} />
               </View>
             </View>
           </View>
@@ -167,5 +201,8 @@ const styles = StyleSheet.create({
     marginTop: '30%',
     justifyContent: 'center',
     borderRadius: 10,
+  },
+  error: {
+    color: "red",
   },
 });

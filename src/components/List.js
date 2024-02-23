@@ -5,7 +5,7 @@ import {DeleteBook} from '../../util/Helpers';
 import {PLACEHOLDER_DATA, UPDATE_MODAL} from '../../slice/crudSlice';
 
 export default function List({item}) {
-  const placehoderData = useSelector(state => state.quotes.PlaceHolder);
+  const placehoderData = useSelector(state => state.books.PlaceHolder);
   let dispatch = useDispatch();
   let onPressRemove = () => {
     DeleteBook(dispatch, item?.id);
