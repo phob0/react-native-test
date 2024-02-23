@@ -60,7 +60,6 @@ const Book = createReducer(initialState, builder => {
 
   builder.addCase(UPDATE_ONE, (state, action) => {
     let prev = JSON.parse(JSON.stringify(state.books));
-    console.log(prev)
     const index = prev.findIndex(obj => obj.id === action.payload.id);
     if (index !== -1) prev[index] = action?.payload;
     return {

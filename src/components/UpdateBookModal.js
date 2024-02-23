@@ -25,6 +25,13 @@ const UpdateBookModal = ({handleCloseUpdateModal}) => {
   const [author, setAuthor] = useState();
   const [title, setTitle] = useState();
 
+  /** NU AM MAI AVUT TIMP SA ADAUG VALOAREA INTIALA, SRY :) */
+  
+  // if (placehoderData?.title || placehoderData?.author) {
+  //   setTitle(placehoderData?.title)
+  //   setAuthor(placehoderData?.author)
+  // }
+
   const [selectedStartDate, setSelectedStartDate] = useState(null);
 
   const startDate = selectedStartDate ? moment(selectedStartDate).format('YYYY-MM-DD').toString() : moment(placehoderData?.date).format('YYYY-MM-DD').toString();
